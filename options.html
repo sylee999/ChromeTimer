@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="ChromeTimer" ng-csp>
+<head>
+  <meta charset="UTF-8">
+  <title>Chrome timer</title>
+
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/spectrum.css" rel="stylesheet">
+  <link href="css/timer.css" rel="stylesheet">
+</head>
+<body ng-controller="OptionController">
+<div class="container">
+  <div class="banner">
+    <div class="banner_left">
+      <img src="img/ChromeTimer128.png" class="logo" alt="">
+    </div>
+    <div class="banner_right">
+      <h1>Chrome Timer</h1>
+
+      <p>
+        Simple chrome timer.
+      </p>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-sm-8">
+      <form name="timerForm" class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">표시 형태</label>
+          <div class="col-sm-10">
+            <div class="radio">
+              <label>
+                <input type="radio" value="panel" ng-model="config.windowType"> panel
+              </label>
+              <div ng-if="config.windowType == 'panel'">
+                주소창에서 chrome://flags/#enable-panels 입력후 enable로 선택 뒤 크롬을 재시작해야 동작 합니다.
+              </div>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" value="popup" ng-model="config.windowType"> popup
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">주기</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="config.interval" input-mask="{mask: 'h:s:s', insertMode: false}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">시계 노출</label>
+          <div class="col-sm-10">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="config.showClock" ng-true-value="'Y'" ng-false-value="'N'"> 노출
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">색상</label>
+          <div class="col-sm-10">
+            <label>
+              글자색
+            </label>
+            <spectrum-colorpicker ng-model="config.textColor"
+                                  options="{preferredFormat: 'hex', clickoutFiresChange: true, showInput: true, showAlpha: true}">
+            </spectrum-colorpicker>
+            &nbsp;&nbsp;
+            <label>배경색</label>
+            <spectrum-colorpicker ng-model="config.bgColor"
+                                  options="{preferredFormat: 'hex', clickoutFiresChange: true, showInput: true, showAlpha: true}">
+            </spectrum-colorpicker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">사이즈</label>
+          <div class="col-sm-2">
+            <input type="range" class="ctrl" min=1 max=3 step=1 ng-model="config.size">
+          </div>
+          {{config.size}}
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">
+            사운드
+            <button ng-click="playAudio()" ng-if="audioOptions.status == 'stop'"><span class="glyphicon glyphicon-play"></span></button>
+            <button ng-click="stopAudio()" ng-if="audioOptions.status == 'start'"><span class="glyphicon glyphicon-stop"></span></button>
+          </label>
+          <div class="col-sm-10" ng-init="sounds = ['Cuckoo', 'Ding', 'Kongas', 'Rooster']">
+            <div class="radio" ng-repeat="sound in sounds">
+              <label>
+                <input type="radio" value="{{sound}}" ng-model="config.sound"> {{sound}}
+              </label>
+            </div>
+            <div class="radio-inline">
+              <label>
+                <input type="radio" value="TTS" ng-model="config.sound"> TTS
+                <input type="text" class="form-control" ng-model="config.soundText" ng-if="config.sound == 'TTS'"/>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">폰트</label>
+          <div class="col-sm-10">
+            <div class="radio-inline" ng-repeat="font in fontList">
+              <label style="font-family: {{font.fontId}}">
+                <input type="radio" value="{{font.fontId}}" ng-model="config.font"> {{font.displayName}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-4">
+      <label>미리보기</label>
+      <div ng-include="'timer.html'"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/lib/jquery-1.11.1.min.js"></script>
+<script src="js/lib/jquery.inputmask.bundle.js"></script>
+<script src="js/lib/underscore.js"></script>
+<script src="js/lib/angular.js"></script>
+<script src="js/lib/spectrum.js"></script>
+<script src="js/lib/angular-spectrum-colorpicker.js"></script>
+<script src="js/app/app.js"></script>
+<script src="js/app/options.js"></script>
+<script src="js/app/timer.js"></script>
+</body>
+</html>

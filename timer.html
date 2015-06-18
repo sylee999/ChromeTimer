@@ -1,0 +1,39 @@
+<div ng-controller="TimerController" class="timer-container" style="zoom:{{config.size/3}};">
+  <div class="clock" ng-if="config.showClock=='Y'">
+    <span>
+      <input type="text" class="display" ng-model="clock" readonly
+             style="font-family: {{config.font}}; color: {{config.textColor}}; background-color: {{config.bgColor}};"/>
+    </span>
+  </div>
+  <div class="timer">
+    <input type="text" class="display" ng-model="timer"
+           input-mask="{mask: 'h:s:s', insertMode: false}"
+           style="font-family: {{config.font}}; color: {{config.textColor}}; background-color: {{config.bgColor}};"/>
+    <div class="button row">
+      <div class="col-xs-8">
+        <div class="btn-group btn-group-justified" role="group">
+          <div class="btn-group" ng-if="timerStatus.status!='start'">
+            <button type="button" class="btn btn-default" ng-click="start()">
+              <span class="glyphicon glyphicon-play"></span>
+            </button>
+          </div>
+          <div class="btn-group" ng-if="timerStatus.status=='start'">
+            <button type="button" class="btn btn-default" ng-click="pause()">
+              <span class="glyphicon glyphicon-pause"></span>
+            </button>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default" ng-click="stop()">
+              <span class="glyphicon glyphicon-stop"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <button type="button" class="btn btn-default btn-block" ng-click="setting()">
+          <span class="glyphicon glyphicon-cog"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

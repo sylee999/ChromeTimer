@@ -1,0 +1,37 @@
+/*
+ * Base structure
+ */
+body {
+    padding: 6px;
+}
+
+.timer-container {
+    width: 360px;
+    height: 200px;
+    font-size: 3em;
+}
+
+.clock, .timer {
+    padding: 2px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.display {
+    padding: 4px;
+    margin: 0 4px 0 4px;
+    width: 98.5%;
+    text-align: center;
+}
+
+.button {
+    padding: 2px 4px 0 4px;
+}
+
+.banner_left {
+    padding: 8px;
+    float: left;
+}
+.banner_right {
+    padding: 8px;
+}
