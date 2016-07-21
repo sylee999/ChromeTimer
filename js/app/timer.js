@@ -45,17 +45,21 @@ timerApp.controller("TimerController", function ($scope, $timeout, TimerService,
     });
 
     TimerService.addJob(function () {
-        if ($scope.timerStatus.status == "start") {
+        if ($scope.timerStatus.status == "start" || $scope.timerStatus.status == "overtime") {
             var sec = TimerService.time2sec($scope.timer);
-            if (sec > 0) {
-                $scope.timer = TimerService.sec2time(sec - 1);
-            } else {
-                $scope.done();
+            if ($scope.timerStatus.status == "start") {
+                if (sec > 0) {
+                    $scope.timer = TimerService.sec2time(sec - 1);
+                } else {
+                    $scope.done();
+                }
+            } else if ($scope.timerStatus.status == "overtime") {
+                $scope.timer = TimerService.sec2time(sec + 1);
             }
         }
     });
     TimerService.addJob(function() {
-        if ($scope.timerStatus.status == "start") {
+        if ($scope.timerStatus.status == "start" || $scope.timerStatus.status == "overtime") {
             var timer = $scope.timer.split(":").join("").slice(2, 6);
             chrome.browserAction.setBadgeText({text: timer});
             chrome.browserAction.setBadgeBackgroundColor({color: "#ff0000"});
@@ -74,7 +78,7 @@ timerApp.controller("TimerController", function ($scope, $timeout, TimerService,
 
     $scope.done = function() {
         OptionService.playAudio();
-        $scope.timerStatus.status = "stop";
+        $scope.timerStatus.status = "overtime";
     };
 
     $scope.stop = function() {
